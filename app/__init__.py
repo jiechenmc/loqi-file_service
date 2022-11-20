@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from app.core import read_blob, upload_blob
 
 app = FastAPI()
@@ -10,11 +10,9 @@ async def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/get")
-async def read_blob_by_id():
+@app.get("/api/upload")
+async def read_blob_by_id(request: Request):
+    print("HI")
+    res = await request.body()
+    print(res)
     return read_blob(b_name, "testBlob")
-
-
-async def upload_blob_bytes():
-    upload_blob(b_name)
-    return "success"
